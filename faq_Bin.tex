@@ -1,0 +1,1003 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Frequently Asked Questions
+% LaTeX Template
+% Version 1.0 (22/7/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Adam Glesser (adamglesser@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry} % Required to make the margins smaller to fit more content on each page
+\usepackage[linkcolor=blue]{hyperref} % Required to create hyperlinks to questions from elsewhere in the document
+\hypersetup{pdfborder={0 0 0}, colorlinks=true, urlcolor=blue} % Specify a color for hyperlinks
+\usepackage{todonotes} % Required for the boxes that questions appear in
+\usepackage{tocloft} % Required to give customize the table of contents to display questions
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{palatino} % Use the Palatino font
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+% Create and define the list of questions
+\newlistof{questions}{faq}{\large List of Frequently Asked Questions} % This creates a new table of contents-like environment that will output a file with extension .faq
+\setlength\cftbeforefaqtitleskip{4em} % Adjusts the vertical space between the title and subtitle
+\setlength\cftafterfaqtitleskip{1em} % Adjusts the vertical space between the subtitle and the first question
+\setlength\cftparskip{.3em} % Adjusts the vertical space between questions in the list of questions
+
+% Create the command used for questions
+\newcommand{\question}[1] % This is what you will use to create a new question
+{
+\refstepcounter{questions} % Increases the questions counter, this can be referenced anywhere with \thequestions
+\par\noindent % Creates a new unindented paragraph
+\phantomsection % Needed for hyperref compatibility with the \addcontensline command
+\addcontentsline{faq}{questions}{#1} % Adds the question to the list of questions
+\todo[inline, color=green!40]{\textbf{#1}} % Uses the todonotes package to create a fancy box to put the question
+\vspace{1em} % White space after the question before the start of the answer
+}
+
+% Uncomment the line below to get rid of the trailing dots in the table of contents
+%\renewcommand{\cftdot}{}
+
+% Uncomment the two lines below to get rid of the numbers in the table of contents
+%\let\Contentsline\contentsline
+%\renewcommand\contentsline[3]{\Contentsline{#1}{#2}{}}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND LIST OF QUESTIONS
+%----------------------------------------------------------------------------------------
+
+\begin{center}
+\Huge{\bf \emph{Notes: Frequently Asked Questions}} % Main title
+\end{center}
+
+\listofquestions % This prints the subtitle and a list of all of your questions
+
+\newpage % Comment this if you would like your questions and answers to start immediately after table of questions
+
+%----------------------------------------------------------------------------------------
+%	QUESTIONS AND ANSWERS
+%----------------------------------------------------------------------------------------
+
+\question{How to add a package for latex?}\label{question-styinstall}
+\begin{itemize}
+  \item Get the name of the package.\\
+  \item Search the package with google or CTAN.\\
+  \item Download the package and unpack it, then handle the file with suffix .ins with latex.\\
+  \item Move the whole package to tex directory. For Ubuntu: ~/texmf.
+  \item Update the index of latex with command ``texhash''.\\
+\end{itemize}
+
+%------------------------------------------------
+
+\question{How to enlarge the memory avaiable for imagJ?}\label{question-imagej}
+One way:
+\begin{verbatim}
+su master
+sudo vi imagej
+change variable "default_mem" to the value you like.
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{How to use dpkg?}\label{question-dpkg}
+
+(1) install *.deb package
+\begin{verbatim}
+dpkg -i *.deb
+\end{verbatim}
+(2) remove 
+\begin{verbatim}
+remove: dpkg -r pkg1 pkg2 ..
+purge:  dpkg -P pkg1 pkg2 ..
+\end{verbatim}
+(3) inquiry package information
+\begin{verbatim}
+status:        dpkg -l [package]
+file location: dpkg --listfiles {package}
+detailed info: dpkg -s {package}
+\end{verbatim}
+(4) other useful skills for installing packages
+\begin{verbatim}
+apt-cache search: search package
+apt-cache show: show the infomation of one package
+apt-get install package --reinstall: reinstall package
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{In LAMMPS, what is the difference between \$\{x\} and v\_x?}\label{parase}
+
+One example to explain: \\
+\begin{verbatim}
+    variable x equal temp
+(1) variable y equal ${x}
+(2) variable y equal v_x
+\end{verbatim}
+In the first command, if temp equals 10 now, then y alway equals 10. And in the second style, the command means $y=x=
+temp$, y will change according to x or temp.\\
+PS: when use \$x in variable command, quotes should not be added.
+One example to get the current lz:
+\begin{verbatim}
+variable tmp equal lz
+variable lz0 equal ${tmp}
+\end{verbatim}
+By the way, I want to note the way to add an increment to a variable
+\begin{verbatim}
+variable a equal 2
+variable tmp euqal ``v_a + 1''
+varibale a equal ${tmp}
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{Why do we use ''dump\_modify 1 sort id'' when to get the atomic strain?}\label{atomic-strain}
+
+Atomeye stores the atom vector in the order atom data appears in cfg file. If that command is not used, the atom order
+ouput in the cfg file is not always the same. So, with the command, atomeye could store the atom data in the same
+position in atom vector so as to get the atomic strain calculated correct.
+%------------------------------------------------
+
+\question{Why is backup so important?}\label{backup}
+
+Backup is very very very very very \textbf{important} which you will find a true principle when you lose something. And when you try to use ''rm
+-rf *'', think it over before you do it.\\
+PS: However, it is possible to recover the files you deleted wich ''rm''. But it is not an easy thing.
+
+%------------------------------------------------
+
+\question{How to simpely use tar?}\label{tar}
+
+-c: create\\
+-r: append file\\
+-v: ouput info when handle files\\
+-f: use archive file or device ARCHIVE\\
+-t: list the contents of an archive\\
+-x: extract files from an archive\\
+-z: --gzip, --gunzip --ungzip\\
+\begin{verbatim}
+compress:      tar [-]czvf this.tar.gz --exclude=PATTERN files
+uncompress:    tar [-]xzvf this.tar.gz
+list contents: tar [-]tvf  this.tar.gz
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{How to delete all the files (same name or pattern) in all directories below the current one?}\label{delete}
+
+One possible way:
+\begin{verbatim}
+EXAMPLE: 
+To remove all PNG images
+find . -name '*.png' -print0 | xargs -0 rm
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{Is it possible to define the default scale in calculator bc?}\label{bc}
+
+Here, I find a comprise. To use \textbf{bc -l} which will set scale = 20. In this way, maybe an alias could be set to
+use bc if large scale is wanted in most situation. If you just want to use bc for one calculation, the alias below may
+be useful to you.
+\begin{verbatim}
+alias mymath='bc -l <<<'
+Usage: mymath '290/109'
+\end{verbatim}
+Tips: If you want caculate one formular with integer, it could be done like below:
+\begin{verbatim}
+echo $((2+3))
+\end{verbatim}
+which may be used in your bash script.\\
+WARNING: bc doesn't support scientific notation. However, they can be translated in a format bc can handle by using sed.
+By using
+\begin{verbatim}
+value=`echo ${value} | sed -e 's/[eE]+*/\*10\^/'`
+\end{verbatim}
+Thus, a bash script may be useful,
+\begin{verbatim}
+#!/bin/sh
+value=`\varepsiloncho $1 | sed -e 's/[eE]+*/\*10\^/g'`
+value=`\varepsiloncho $value | bc -l`
+echo $value
+\end{verbatim}
+%------------------------------------------------
+
+\question{How to use sed to replace one line with defined string?}\label{sed}
+
+\begin{verbatim}
+sed -i -e '5c\1000' file
+\end{verbatim}
+Some other usage:\\
+Print selected lines:
+\begin{verbatim}
+sed -n '10,12p;13q' file
+\end{verbatim}
+Insert line:
+\begin{verbatim}
+sed -i '1 i Hello' test.dat
+\end{verbatim}
+Delete line:
+\begin{verbatim}
+sed -i '2d' test.dat
+sed -i '/fish/d' test.dat
+\end{verbatim}
+Replace string:
+\begin{verbatim}
+sed -i 's/foo/test/g' filename
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{How to input some uncommon char in xmgrace?}\label{xmgrace}
+
+In the input box, type \textbf{''ctrl+E''} may help you.
+Angstrom 
+\begin{verbatim}
+\cE\C
+\end{verbatim}
+%------------------------------------------------
+
+\question{How to count all the files in current directory?}\label{file-count}
+
+The command below may be useful:
+\begin{verbatim}
+ls -l | grep '^-' | wc -l
+\end{verbatim}
+%------------------------------------------------
+
+\question{How to use vim-latex? vim-latex notes}\label{vim-latex}
+\begin{itemize}
+\item type in \verb+\ref{fig:+ and press Ctrl-n you will automatically cycle through
+ all the figure labels. 
+\end{itemize}
+PS: The vim-laxtex reference card makes a better summary. So I stop making notes.
+
+
+%------------------------------------------------
+
+\question{How to encrypt a file in linux?}\label{encrypt-file}
+
+The simplest way:
+\begin{verbatim}
+vim -x myfile
+\end{verbatim}
+Use openssl:
+\begin{verbatim}
+encrypt:
+openssl enc -aes-128-ecb -e -in myfile -out myfile-aes
+decrypt:
+openssl enc -aes-128-ecb -d -in myfile-aes -out myfile
+\end{verbatim}
+Use GnuPG: man gpg
+%------------------------------------------------
+
+\question{How to install Chinese surport in TEX-LIVE}\label{Chinese}
+
+\begin{enumerate}
+\item Find a texlive 2013 image to download.
+\item \verb+sudo mount -o loop texlive-image /mnt+
+\item Use command \verb+sudo apt-get install perl-tk+ to install texlive with GUI
+\item Install: \verb+sudo ./install-tl -gui+
+\item \verb+export PATH=/usr/local/texlive/2013/bin/x86_64-linux:$PATH+
+\item Install Chinese fonts.
+\item Modify Chines config file in /usr/local/texlive/2013/texmf-dist/tex/latex/ctex/fontset \&
+ texmf-dist/tex/generic/zhmetrics/zhwinfonts.tex
+\item It is recommended to use xelatex to compile your tex file.
+\item other useful command: \verb+fc-cache    fc-list :lang=zh+
+\end{enumerate}
+
+%------------------------------------------------
+
+\question{How to simply use sort?}\label{sort}
+
+One exmaple:
+sort the second column of my.dat in ascending order.
+\begin{verbatim}
+sort -n -k 2 my.dat -o my.dat
+\end{verbatim}
+
+%------------------------------------------------
+
+\question{How to make a comment in awk script}\label{awk-script}
+
+The content behind \# will be commented.
+
+One more tip in awk, the variable will be initialized as NULL string or zero, depending on the environment. It is due to
+the dynamic type of variables in awk.
+
+%------------------------------------------------
+
+\question{How to output the data in gnuplot?}\label{gnuplot-data}
+
+\begin{verbatim}
+set table 'filename.dat'
+plot 'tmp.dat' u 1:2 w p
+unset table
+\end{verbatim}
+%------------------------------------------------
+
+\question{How paste code in vim without clutters?}\label{vim:paste}
+
+One useful set when pasting code:
+\begin{verbatim}
+set paste
+set nopaste
+\end{verbatim}
+Another way:
+\begin{verbatim}
+Add to ~/.vimrc:
+set pastetoggle=<F9>
+\end{verbatim}
+When you are in the insert mode, pressing $<F9>$ will toggle paste mode.
+%------------------------------------------------
+
+\question{How to output the sort result to the origin file?}\label{sort:output}
+
+One example:
+\begin{verbatim}
+sort -n -k 1 -o data.file data.file 
+\end{verbatim}
+%------------------------------------------------
+
+\question{How to plot 3D vector field with gnuplot?}\label{gnuplot:3d vector}
+
+One example:
+\begin{verbatim}
+splot ``data.file'' w vectors
+\end{verbatim}
+You can also plot it with atomeye or Xcrysten, and atomeye works better in big system.\\
+Enhancement to atomeye: http://www.jrkermode.co.uk/atomeye.html
+
+%------------------------------------------------
+
+\question{How to make the path name short on the console?}\label{console:short}
+
+Edit the ~/.bashrc, and on the line that starts PS1= change the lowercase 
+``\textbackslash w'' into an upper case ``\textbackslash W''.
+
+%------------------------------------------------
+
+\question{How to get the graphic card info?}\label{system:graphic card}
+
+One command:
+\begin{verbatim}
+lspci
+\end{verbatim}
+Comments: List Peripheral Component Interconnect?
+%----------------------------------------------------------------------------------------
+
+\question{How to grep files recursively?}\label{grep:files}
+
+Only include the first child directory:
+\begin{verbatim}
+grep 'Loop time' */*
+\end{verbatim}
+Find all files recursively:
+\begin{verbatim}
+find . -name '*' -print0 | xagrs -0 grep 'Loop time'  
+\end{verbatim}
+%----------------------------------------------------------------------------------------
+
+\question{How to extract images from pdf document in ubuntu/linux?}\label{pdfimage}
+
+Pdfimages may help you. Some example:
+\begin{verbatim}
+pdfimages -j -p -f 2 -l 3 one.pdf nameprefix
+\end{verbatim}
+%----------------------------------------------------------------------------------------
+
+\question{How to use rsync to update remote files?}\label{rsync}
+
+\begin{verbatim}
+rsync -avz -e 'ssh -p 2222' xubin@manager:PATH/ localpath
+\end{verbatim}
+Pay attention to the ``/'' after path
+%----------------------------------------------------------------------------------------
+
+\question{How to plot data set in gnuplot?}\label{gnuplot-dataset}
+Just add i option to choose data set. For example,
+\begin{verbatim}
+plot ``datafile'' i 0 u 2:4 w lp
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{Where to find the host file?}\label{hostfile}
+For linux: /etc/hosts\\ 
+For win7: C:/windows/system32/driver/etc/hosts\\
+
+%----------------------------------------------------------------------------------------
+
+\question{How to update svn to a new computer?}\label{svn-co}
+For exmaple,
+\begin{verbatim}
+svn checkout http://artn.googlecode.com/svn/trunk/
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{Some tips for using command top in linux.}\label{top}
+Use 'h' to see the help info.\\
+One useful command '1' to see every cpu info. 'c' to get colored
+%----------------------------------------------------------------------------------------
+
+\question{How to setup default mod for created files under linux?}\label{umask}
+umask helps you.
+
+%----------------------------------------------------------------------------------------
+
+\question{How to read both file and stdinput to an process? }\label{}
+
+\begin{verbatim}
+cat file - | program
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to change apache Document root in Ubuntu 14.04 LTS?}\label{}
+First,
+\begin{verbatim}
+sudo vi /etc/apache2/sites-available/000-default.conf
+\end{verbatim}
+Find
+\begin{verbatim}
+DocumentRoot /var/www/html
+\end{verbatim}
+Change the directory.
+\begin{verbatim}
+sudo vi /etc/apache2/apache2.conf
+\end{verbatim}
+Find 
+\begin{verbatim}
+<Directory /var/www/html/>
+Options Indexes FollowSymLinks
+AllowOverride None
+Require all granted
+</Directory>
+\end{verbatim}
+Change the directory. Then, restart apache.
+\begin{verbatim}
+sudo service apache2 restart
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to install Pydio in Ubuntu?}\label{pydio}
+
+First, install mysql and php\ldots
+\begin{verbatim}
+sudo apt-get install apache2 php5 php5-cli php5-gd php5-mcrypt libapr1 libaprutil1 ssl-cert
+\end{verbatim}
+Download pydio, and mv it to /var/www. Then, 
+\begin{verbatim}
+chown www-data:www-data -R /var/www/pydio
+\end{verbatim}
+Create database in mysql,
+\begin{verbatim}
+mysql -u root -p
+CREATE DATABASE pydio
+CREATE USER ” pydio ‘@’ localhost ‘ IDENTIFIED BY ‘ password ‘
+GRANT ALL PRIVILEGES ON * TO pydio ” pydio ” @ “localhost”
+\end{verbatim}
+Change Apache AllowOverride. Find /etc/apache2/apache2.conf to change the flag to ``all''\\
+Change max file size upload. Find php.ini
+\begin{verbatim}
+upload_max_filesize = ``20M''
+post_max_size = ``25M''
+\end{verbatim}
+Configure your pydio through web setup wizard.
+
+%----------------------------------------------------------------------------------------
+
+\question{How to restart apache?}\label{restart-apache}
+With this easy command,
+\begin{verbatim}
+apachectl -k restart
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{What are some funny Linux commands?}\label{linux-funny}
+For one,
+\begin{verbatim}
+telnet towel.blinkenlights.nl
+\end{verbatim}
+
+
+%----------------------------------------------------------------------------------------
+
+\question{How to judge if a file or a directory exist in current directory in bash?}\label{bash-judge}
+
+Examples,
+\begin{verbatim}
+[ -f file ] && echo ``file exist.''
+[ -d directory ] && echo ``directory exist''
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{Why is the total potential energy of L-J system  very small? }\label{}
+Note that for LJ units, the default mode of thermodyamic output via the thermo\_style command is to normalize energies by
+the number of atoms, i.e. energy/atom. This can be changed via the thermo\_modify norm command.
+
+%----------------------------------------------------------------------------------------
+
+\question{How to do spell check in VIM?}\label{}
+For versin >= 7, we can turn the spell check on use the following setting:
+\begin{verbatim}
+:set spell spelllang=en_us
+\end{verbatim}
+Updates: A better way,
+\begin{verbatim}
+map <F4> :setlocal spell! spelllang=en_us<CR>
+\end{verbatim}
+To move o a misspelled word, use ]s and [s. The ]s command will move the cursor to the next misspelled word, the [s
+  command will move the cursor back through the buffer to previous misspelled words.\\
+  Once the cursor is on the word, use z=, and Vim will suggest a list of alternatives that it thinks may be correct.\\
+
+
+%----------------------------------------------------------------------------------------
+
+\question{How to debug shell script?}\label{}
+
+Run shell script with option '-x'.
+%----------------------------------------------------------------------------------------
+
+\question{How to merge pdf files?}\label{}
+\begin{verbatim}
+pdftk file1.pdf file2.pdf cat output mergedfile.pdf
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to use git?}\label{}
+
+An useful guid (url: http://rogerdudler.github.io/git-guide/).
+I may write a summary if I have spare time.
+Easy guide:
+First, you may do a bunch of changes to local files. Then,
+\begin{verbatim}
+git add min_artn.cpp
+git commit
+git push origin master
+\end{verbatim}
+Finished.
+
+%----------------------------------------------------------------------------------------
+
+\question{How to convert pdf to jpg?}\label{}
+
+It is easy to use convert command in linux to convert file type. Example:
+\begin{verbatim}
+convert -density 300 file.pdf file.jpg
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to write differential operator in latex}\label{}
+It is easy to deal with this use commath package with command
+\begin{verbatim}
+\usepackage(commath}
+\int \dif x
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to let LaTex just put picture on the origin position?}\label{}
+Use float package, and position flag use H.
+\begin{verbatim}
+\usepackage{float}
+\begin{figure}[H]
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to add daily jobs in ubuntu?}\label{}
+
+Use crontab to do it,
+\begin{verbatim}
+crontab -e
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to solve the Chinese chaos in gftp?}\label{}
+\begin{verbatim}
+vi ./gftp/gftprc
+remote_charsets=cp936,gb18303,gbk,gb2312,utf8,gb18030,euc-tw,zh_CN
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to make ipython show the history in previous session?}\label{}
+\begin{verbatim}
+%history ~1/
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to clean DNS-cache in Ubuntu?}\label{}
+\begin{verbatim}
+sudo /etc/init.d/networking restart
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to print with colors in terminal using python?}\label{}
+Several approaches:
+\begin{itemize}
+  \item 
+    \begin{verbatim}
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+print bcolors.WARNING + "Warning: No active frommets remain. Continue?" 
+      + bcolors.ENDC    
+    \end{verbatim}
+  \item
+    \begin{verbatim}
+from termcolor import colored
+print colored('hello', 'red'), colored('world', 'green')
+    \end{verbatim}
+   Or module colorrama for all cross-platform supporting.
+  \item
+    \begin{verbatim}
+CSI=``\x1B[''
+  reset=CSI+``m''
+  print CSI+``31;40m'' + ``Colored Text'' + CSI + ``0m''
+    \end{verbatim}
+    For more info see http://en.wikipedia.org/wiki/ANSI\_escape\_code
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+
+\question{How to unfold all folds in vim?}\label{}
+\begin{verbatim}
+zR
+\end{verbatim}
+In order to adjust the initial fold level, play around with the foldlevel, e.g.
+\begin{verbatim}
+:set foldlevel=1
+\end{verbatim}
+
+
+%----------------------------------------------------------------------------------------
+
+\question{How to use Vim spell check?}\label{}
+Active:
+\begin{verbatim}
+:setlocal spell spelllang=en_us `` For coding
+:set spell spelllang=en_us '' For text editing
+map <F4> :setlocal spell! spelllang=en_us<CR>
+\end{verbatim}
+Using spellchecking:\\
+Move to a misspelled word, use ]s and [s. The ]s command will move the cursor to the next misspelled word, the [s
+  command will move the cursor back through the buffer to previous misspelled words.
+  Once the cursor is on the word, use z=, and Vim will suggest a list of alternatives that it thinks may be correct. 
+
+%----------------------------------------------------------------------------------------
+
+\question{Some tips in LAMMPS}\label{}
+\begin{itemize}
+  \item Sometimes, fix box/relax may cause a slow minimization porcess.
+  \item Some fixes like langevin may change the force output for each atom. One should pay attention when trying to get
+    atom force.
+  \item One should be careful when using lattice orient to create box atoms, as it sometimes failed to create periodic
+    boudary box. Or one should try to use block 4*N to avoid the bad situation.
+    One example: fcc (111-z) 
+    \begin{verbatim}
+lattice         fcc  $a orient x 1 1 -2 orient y -1 1 0 orient z 1 1 1
+region          box block 0 10 0 10 0 12
+# change to
+# region          box block 0 12 0 12 0 24
+    \end{verbatim}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+
+\question{How to distribute user info in NIS server?}\label{}
+\begin{verbatim}
+sudo make -C /var/yp
+\end{verbatim}
+%----------------------------------------------------------------------------------------
+
+\question{How to solve chaos in gedit chinese?}\label{}
+\begin{verbatim}
+gsettings set org.gnome.gedit.preferences.encodings auto-detected ``['GB18030', 'UTF-8', 'CURRENT', 'ISO-8859-15', 'UTF-16']''
+\end{verbatim}
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\question{How to easily use sympy?}\label{}
+One example:
+\begin{verbatim}
+from sympy import *
+x = Symbol('x')
+k = Symbol('k')
+diff(kx,x)
+\end{verbatim}
+
+\question{How to simply use GDB?}\label{}
+Set args:
+\begin{verbatim}
+set args -in in.test
+\end{verbatim}
+print array:
+\begin{verbatim}
+print *a@10
+\end{verbatim}
+Other command:
+\begin{verbatim}
+run
+continue (c)
+watch
+print (p)
+display
+b file:linenum
+\end{verbatim}
+rerun: run
+%----------------------------------------------------------------------------------------
+\question{How to find files in linux?}\label{}
+\begin{itemize}
+  \item[find]
+    search for files in a directory hierarchy.\\
+    Example: 
+    \begin{verbatim}
+    find . -name 'test*'
+    \end{verbatim}
+  \item[locate]
+    locate reads one or more databases prepared by updatedb(8) and writes file names matching at least one of the
+    PATTERNs to standard output, one per line. To find the files recently created, you should frist update database with
+    command ``updatedb''
+  \item[whereis] locate the binary, source, and manual page files for a command.
+  \item[which] locate a command.
+  \item[type]
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\question{How to write good paper?}\label{}
+\begin{itemize}
+  \item Read and Revise.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\question{What is the difference in citing/referencing with or without tilde?}\label{}
+The tilde ~ is an unbreakable space, i.e. the line will never be broken at this position. If you write
+Table\verb+~\ref{\ldots}+ the table number generated by \verb|\ref| will always be on the same line as Table, which is the preferable
+formatting. Having ``Table'' at the end of a line and then ``1'' at the beginning of the next simply looks bad.
+
+The tilde is also used in names if they include a title, like \verb|Dr.~Faust|, which will also ensure that the ``Dr.'' and the
+name is not broken between two lines, and also ensures that the \verb+.+ is not taken as a full-stop, which usually produces a
+larger space after it.
+
+%----------------------------------------------------------------------------------------
+\question{HowTo: Linux / UNIX List Just Directories Or Directory Names}\label{}
+\begin{verbatim}
+ls -l | grep '^d'
+ls -d */
+\end{verbatim}
+
+
+%----------------------------------------------------------------------------------------
+\question{How to Reset the Numbering of Tables and Figures in an Appendix in latex?}\label{}
+By default (at least in Koma-Script article class), Tables and Figures included in an Appendix will be numbered
+continuously with the Tables and Figures in the main text. In order to have the ones in the Appendix numbered in a
+special way (e.g., Figure A.1 for Appendix A), the following TeX hack can be used to reset and format the numbering.
+Insert the following in ERT somewhere inside the Appendix before any floats (but in a standard paragraph, not in the
+Appendix section title):
+\begin{verbatim}
+\setcounter{figure}{0} \renewcommand{\thefigure}{A.\arabic{figure}}
+\end{verbatim}
+To do the same for Tables, just change the string ``figure'' to ``table'' in all three places.
+This changes the entries in the TOC correctly as well.
+Ref: https://wiki.lyx.org/Tips/ResetNumberingOfTablesAndFiguresInAnAppendix
+
+%----------------------------------------------------------------------------------------
+\question{How to avoid font missing in latex figure from xmgrace?}\label{}
+In the print setup in xmgrace, avoid the option using device font.
+
+%----------------------------------------------------------------------------------------
+\question{SShd safety strategy}\label{}
+\begin{verbatim}
+  /etc/ssh/sshd_config
+\end{verbatim}
+\begin{itemize}
+  \item \verb+PermitRootLogin  no+
+  \item \verb+PermitEmptyPasswords  no+
+  \item \verb+Port 2222+
+  \item \verb+ListenAddress 192.168.1.5+
+  \item \verb+PasswordAuthentication no+
+  \item change /etc/hosts.allow  
+    \begin{verbatim}
+    sshd:192.168.1.5:allow
+    \end{verbatim}
+    change /etc/hosts.deny
+    \begin{verbatim}
+     sshd:ALL
+    \end{verbatim}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\question{How to know the live host (ip, mac, hostname) in local network?}\label{}
+\begin{verbatim}
+nmap -sP 192.168.1.*
+cat /proc/net/arp
+\end{verbatim}
+
+
+%----------------------------------------------------------------------------------------
+\question{How to debug python script?}\label{}
+\begin{verbatim}
+python -m pdb myscript.py
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+\question{How to install and use shadowsockets?}\label{}
+If you want to see beyond the great fire wall (GFW), the ``shadowsockets'' will be a powerful
+tool.\\
+\emph{Deploy a shadowsockets server.}
+VPS: e.g. wwww.vultr.com\\
+Setup the server:
+\begin{itemize}
+  \item Install neccessary packages
+    \begin{verbatim}
+apt-get update
+apt-get install build-essential python-pip python-m2crypto python-dev python-gevent supervisor
+pip install shadowsocks
+    \end{verbatim}
+  \item setup the shadowsocks
+    \begin{verbatim}
+vi /etc/shadowsocks.json
+{
+    "server":"45.32.15.178",
+    "port_password":{
+        "8388":"mima1",
+        "8389":"mima2"
+    },
+    "timeout":600,
+    "method":"aes-256-cfb"
+}
+EOF
+\end{verbatim}
+
+  \item setup supervisor
+    \begin{verbatim}
+vi /etc/supervisor/conf.d/shadowsocks.conf
+[program:shadowsocks]
+command=ssserver -c /etc/shadowsocks.json
+autorestart=true
+user= nobody
+EOF
+service supervisor start
+supervisorctl reload
+    \end{verbatim}
+  \item misc
+    \begin{verbatim}
+vi /etc/security/limits.conf
+Append:
+* hard nofile 51200
+* soft nofile 51200
+EOF
+vi /etc/profile
+Append:
+ulimit -n 51200
+EOF
+vi /etc/sysctl.d/local.conf
+# max open files
+fs.file-max = 51200
+# max read buffer
+net.core.rmem_max = 67108864
+# max write buffer
+net.core.wmem_max = 67108864
+# default read buffer
+net.core.rmem_default = 65536
+# default write buffer
+net.core.wmem_default = 65536
+# max processor input queue
+net.core.netdev_max_backlog = 4096
+# max backlog
+net.core.somaxconn = 4096
+
+# resist SYN flood attacks
+net.ipv4.tcp_syncookies = 1
+# reuse timewait sockets when safe
+net.ipv4.tcp_tw_reuse = 1
+# turn off fast timewait sockets recycling
+net.ipv4.tcp_tw_recycle = 0
+# short FIN timeout
+net.ipv4.tcp_fin_timeout = 30
+# short keepalive time
+net.ipv4.tcp_keepalive_time = 1200
+# outbound port range
+net.ipv4.ip_local_port_range = 10000 65000
+# max SYN backlog
+net.ipv4.tcp_max_syn_backlog = 4096
+# max timewait sockets held by system simultaneously
+net.ipv4.tcp_max_tw_buckets = 5000
+# turn on TCP Fast Open on both client and server side
+net.ipv4.tcp_fastopen = 3
+# TCP receive buffer
+net.ipv4.tcp_rmem = 4096 87380 67108864
+# TCP write buffer
+net.ipv4.tcp_wmem = 4096 65536 67108864
+# turn on path MTU discovery
+net.ipv4.tcp_mtu_probing = 1
+
+# for high-latency network
+# net.ipv4.tcp_congestion_control = hybla
+
+# for low-latency network, use cubic instead
+# net.ipv4.tcp_congestion_control = cubic
+EOF
+sysctl --system
+reboot
+    \end{verbatim}
+\end{itemize}
+Setup the client:\\
+\begin{verbatim}
+pip install shadowsocks
+sudo vi /etc/shadowsocks.json
+{
+  "server":"my_server_ip",
+  "local_address": "127.0.0.1",
+  "local_port":1080,
+  "server_port":my_server_port,
+  "password":"my_password",
+  "timeout":300,
+  "method":"aes-256-cfb"
+}
+EOF
+system network proxy: Automatic and need the file generated below.
+pip install genpac
+mkdir ~/shadowsocks
+cd shadowsocks
+genpac --proxy="SOCKS5 127.0.0.1:1080" --gfwlist-proxy="SOCKS5 127.0.0.1:1080" -o autoproxy.pac --gfwlist-url="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt"
+EOF
+\end{verbatim}
+When using chrom, sometimes you may need SwitchyOmega.
+
+%----------------------------------------------------------------------------------------
+\question{How to make terminal use socks5 proxy?}\label{}
+\begin{verbatim}
+# start proxy
+alias start_ss='export ALL_PROXY=socks5://127.0.0.1:1080'
+# end proxy
+alias end_ss='unset ALL_PROXY'
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+\question{How to assign output of os.system to a variable and prevent it from being displayed on the screen?}\label{}
+\begin{verbatim}
+import subprocess
+output = subprocess.check_output(``cat /etc/services'', shell=True)
+\end{verbatim}
+
+
+%----------------------------------------------------------------------------------------
+\question{How to reformat long width paragraph in vim to short width paragraph?}\label{}
+\begin{verbatim}
+gqip
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+\question{How to debug shell script?}\label{}
+
+%----------------------------------------------------------------------------------------
+\end{document}
