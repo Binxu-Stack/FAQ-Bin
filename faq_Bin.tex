@@ -36,7 +36,7 @@
 \newcommand{\question}[1] % This is what you will use to create a new question
 {
 \refstepcounter{questions} % Increases the questions counter, this can be referenced anywhere with \thequestions
-\par\noindent % Creates a new unindented paragraph
+\par\noindent % Creates a new unindent paragraph
 \phantomsection % Needed for hyperref compatibility with the \addcontensline command
 \addcontentsline{faq}{questions}{#1} % Adds the question to the list of questions
 \todo[inline, color=green!40]{\textbf{#1}} % Uses the todonotes package to create a fancy box to put the question
@@ -109,7 +109,7 @@ detailed info: dpkg -s {package}
 (4) other useful skills for installing packages
 \begin{verbatim}
 apt-cache search: search package
-apt-cache show: show the infomation of one package
+apt-cache show: show the information of one package
 apt-get install package --reinstall: reinstall package
 \end{verbatim}
 
@@ -135,7 +135,7 @@ By the way, I want to note the way to add an increment to a variable
 \begin{verbatim}
 variable a equal 2
 variable tmp euqal ``v_a + 1''
-varibale a equal ${tmp}
+variable a equal ${tmp}
 \end{verbatim}
 
 %------------------------------------------------
@@ -143,7 +143,7 @@ varibale a equal ${tmp}
 \question{Why do we use ''dump\_modify 1 sort id'' when to get the atomic strain?}\label{atomic-strain}
 
 Atomeye stores the atom vector in the order atom data appears in cfg file. If that command is not used, the atom order
-ouput in the cfg file is not always the same. So, with the command, atomeye could store the atom data in the same
+output in the cfg file is not always the same. So, with the command, atomeye could store the atom data in the same
 position in atom vector so as to get the atomic strain calculated correct.
 %------------------------------------------------
 
@@ -151,7 +151,7 @@ position in atom vector so as to get the atomic strain calculated correct.
 
 Backup is very very very very very \textbf{important} which you will find a true principle when you lose something. And when you try to use ''rm
 -rf *'', think it over before you do it.\\
-PS: However, it is possible to recover the files you deleted wich ''rm''. But it is not an easy thing.
+PS: However, it is possible to recover the files you deleted with ''rm''. But it is not an easy thing.
 
 %------------------------------------------------
 
@@ -159,14 +159,14 @@ PS: However, it is possible to recover the files you deleted wich ''rm''. But it
 
 -c: create\\
 -r: append file\\
--v: ouput info when handle files\\
+-v: output info when handle files\\
 -f: use archive file or device ARCHIVE\\
 -t: list the contents of an archive\\
 -x: extract files from an archive\\
 -z: --gzip, --gunzip --ungzip\\
 \begin{verbatim}
 compress:      tar [-]czvf this.tar.gz --exclude=PATTERN files
-uncompress:    tar [-]xzvf this.tar.gz
+decompress:    tar [-]xzvf this.tar.gz
 list contents: tar [-]tvf  this.tar.gz
 \end{verbatim}
 
@@ -192,7 +192,7 @@ be useful to you.
 alias mymath='bc -l <<<'
 Usage: mymath '290/109'
 \end{verbatim}
-Tips: If you want caculate one formular with integer, it could be done like below:
+Tips: If you want calculate one formula with integer, it could be done like below:
 \begin{verbatim}
 echo $((2+3))
 \end{verbatim}
@@ -259,13 +259,14 @@ ls -l | grep '^-' | wc -l
 \item type in \verb+\ref{fig:+ and press Ctrl-n you will automatically cycle through
  all the figure labels. 
 \end{itemize}
-PS: The vim-laxtex reference card makes a better summary. So I stop making notes.
+PS: The vim-latex reference card makes a better summary. So I stop making notes.
 
 
 %------------------------------------------------
 
 \question{How to encrypt a file in linux?}\label{encrypt-file}
 
+% cSpell:disable
 The simplest way:
 \begin{verbatim}
 vim -x myfile
@@ -279,9 +280,11 @@ openssl enc -aes-128-ecb -d -in myfile-aes -out myfile
 \end{verbatim}
 Use GnuPG: man gpg
 %------------------------------------------------
+% cSpell:enable
 
 \question{How to install Chinese surport in TEX-LIVE}\label{Chinese}
 
+% cSpell: ignore texlive ctex fontset zhmetrics zhwinfonts
 \begin{enumerate}
 \item Find a texlive 2013 image to download.
 \item \verb+sudo mount -o loop texlive-image /mnt+
@@ -299,7 +302,7 @@ Use GnuPG: man gpg
 
 \question{How to simply use sort?}\label{sort}
 
-One exmaple:
+One example:
 sort the second column of my.dat in ascending order.
 \begin{verbatim}
 sort -n -k 2 my.dat -o my.dat
@@ -327,6 +330,7 @@ unset table
 
 \question{How paste code in vim without clutters?}\label{vim:paste}
 
+% cSpell: ignore nopaste vimrc pastetoggle
 One useful set when pasting code:
 \begin{verbatim}
 set paste
@@ -350,6 +354,7 @@ sort -n -k 1 -o data.file data.file
 
 \question{How to plot 3D vector field with gnuplot?}\label{gnuplot:3d vector}
 
+% cSpell: ignore splot Xcrysten
 One example:
 \begin{verbatim}
 splot ``data.file'' w vectors
@@ -361,13 +366,14 @@ Enhancement to atomeye: http://www.jrkermode.co.uk/atomeye.html
 
 \question{How to make the path name short on the console?}\label{console:short}
 
+% cSpell: ignore textbackslash
 Edit the ~/.bashrc, and on the line that starts PS1= change the lowercase 
 ``\textbackslash w'' into an upper case ``\textbackslash W''.
 
 %------------------------------------------------
 
 \question{How to get the graphic card info?}\label{system:graphic card}
-
+% cSpell: ignore lspci
 One command:
 \begin{verbatim}
 lspci
@@ -383,22 +389,24 @@ grep 'Loop time' */*
 \end{verbatim}
 Find all files recursively:
 \begin{verbatim}
-find . -name '*' -print0 | xagrs -0 grep 'Loop time'  
+find . -name '*' -print0 | xargs -0 grep 'Loop time'  
 \end{verbatim}
 %----------------------------------------------------------------------------------------
 
 \question{How to extract images from pdf document in ubuntu/linux?}\label{pdfimage}
 
+% cSpell: ignore pDfimages 
 Pdfimages may help you. Some example:
 \begin{verbatim}
-pdfimages -j -p -f 2 -l 3 one.pdf nameprefix
+pdfimages -j -p -f 2 -l 3 one.pdf name-prefix
 \end{verbatim}
 %----------------------------------------------------------------------------------------
 
 \question{How to use rsync to update remote files?}\label{rsync}
 
+% cSpell: ignore rsync xubin 
 \begin{verbatim}
-rsync -avz -e 'ssh -p 2222' xubin@manager:PATH/ localpath
+rsync -avz -e 'ssh -p 2222' xubin@manager:PATH/ local_path
 \end{verbatim}
 Pay attention to the ``/'' after path
 %----------------------------------------------------------------------------------------
@@ -406,7 +414,7 @@ Pay attention to the ``/'' after path
 \question{How to plot data set in gnuplot?}\label{gnuplot-dataset}
 Just add i option to choose data set. For example,
 \begin{verbatim}
-plot ``datafile'' i 0 u 2:4 w lp
+plot ``data_file'' i 0 u 2:4 w lp
 \end{verbatim}
 
 %----------------------------------------------------------------------------------------
@@ -418,7 +426,7 @@ For win7: C:/windows/system32/driver/etc/hosts\\
 %----------------------------------------------------------------------------------------
 
 \question{How to update svn to a new computer?}\label{svn-co}
-For exmaple,
+For example,
 \begin{verbatim}
 svn checkout http://artn.googlecode.com/svn/trunk/
 \end{verbatim}
@@ -431,6 +439,7 @@ One useful command '1' to see every cpu info. 'c' to get colored
 %----------------------------------------------------------------------------------------
 
 \question{How to setup default mod for created files under linux?}\label{umask}
+% cspell: ignore umask
 umask helps you.
 
 %----------------------------------------------------------------------------------------
@@ -473,13 +482,14 @@ sudo service apache2 restart
 
 \question{How to install Pydio in Ubuntu?}\label{pydio}
 
+% cSpell: ignore mcrypt pydio chown libapr1 libaprutil1
 First, install mysql and php\ldots
 \begin{verbatim}
 sudo apt-get install apache2 php5 php5-cli php5-gd php5-mcrypt libapr1 libaprutil1 ssl-cert
 \end{verbatim}
 Download pydio, and mv it to /var/www. Then, 
 \begin{verbatim}
-chown www-data:www-data -R /var/www/pydio
+chown  www-data:www-data -R /var/www/pydio
 \end{verbatim}
 Create database in mysql,
 \begin{verbatim}
@@ -499,6 +509,7 @@ Configure your pydio through web setup wizard.
 %----------------------------------------------------------------------------------------
 
 \question{How to restart apache?}\label{restart-apache}
+% cspell: ignore apachectl
 With this easy command,
 \begin{verbatim}
 apachectl -k restart
@@ -507,6 +518,7 @@ apachectl -k restart
 %----------------------------------------------------------------------------------------
 
 \question{What are some funny Linux commands?}\label{linux-funny}
+% cspell: ignore blinkenlights
 For one,
 \begin{verbatim}
 telnet towel.blinkenlights.nl
@@ -526,7 +538,7 @@ Examples,
 %----------------------------------------------------------------------------------------
 
 \question{Why is the total potential energy of L-J system  very small? }\label{}
-Note that for LJ units, the default mode of thermodyamic output via the thermo\_style command is to normalize energies by
+Note that for LJ units, the default mode of thermodynamic output via the thermo\_style command is to normalize energies by
 the number of atoms, i.e. energy/atom. This can be changed via the thermo\_modify norm command.
 
 %----------------------------------------------------------------------------------------
@@ -995,6 +1007,30 @@ output = subprocess.check_output(``cat /etc/services'', shell=True)
 \begin{verbatim}
 gqip
 \end{verbatim}
+
+%----------------------------------------------------------------------------------------
+\question{Tips for customizing Visual Studio Code?}\label{}
+Useful extensions:
+\begin{itemize}
+  \item Bracket Pair Colorizer 2
+  \item C/C++
+  \item Code Spell Checker
+  \item Git graphic
+  \item Git History diff
+  \item LaTex Workshop
+  \item python
+  \item Vim
+\end{itemize}
+%----------------------------------------------------------------------------------------
+
+\question{How to find ebooks online?}\label{}
+\begin{itemize}
+  \item \url{https://www.jiumodiary.com}
+  \item \url{https://www.taobao.com}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\question{How to debug shell script?}\label{}
 
 %----------------------------------------------------------------------------------------
 \question{How to debug shell script?}\label{}
